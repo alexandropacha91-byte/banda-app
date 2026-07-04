@@ -1,0 +1,8 @@
+FROM ghcr.io/cirruslabs/flutter:3.44.4
+RUN yes | sdkmanager --licenses
+RUN sdkmanager "ndk;28.2.13676358"
+RUN apt-get update && apt-get install -y curl unzip
+WORKDIR /app
+COPY . .
+RUN flutter pub get
+CMD flutter build apk --debug && cp build/app/outputs/flutter-apk/app-debug.apk /output/
